@@ -1,15 +1,17 @@
-package com.ably.assignment.application.config
+package com.ably.assignment.infrastructure.config
 
 
-import com.ably.assignment.application.jwt.JwtAccessDeniedHandler
-import com.ably.assignment.application.jwt.JwtAuthenticationEntryPoint
-import com.ably.assignment.application.jwt.TokenProvider
+import com.ably.assignment.infrastructure.jwt.JwtAccessDeniedHandler
+import com.ably.assignment.infrastructure.jwt.JwtAuthenticationEntryPoint
+import com.ably.assignment.infrastructure.jwt.TokenProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
@@ -19,7 +21,7 @@ import org.springframework.web.filter.CorsFilter
 class SecurityConfig(
     private val tokenProvider: TokenProvider,
     private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint,
-    private val jwtAccessDeniedHandler: JwtAccessDeniedHandler
+    private val jwtAccessDeniedHandler: JwtAccessDeniedHandler,
 ) : WebSecurityConfigurerAdapter() {
 
     @Bean
@@ -33,11 +35,25 @@ class SecurityConfig(
         source.registerCorsConfiguration("/api/**", config)
         return CorsFilter(source)
     }
+
+    @Bean
+    fun passwordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder()
+
     override fun configure(web: WebSecurity) {
         web.ignoring()
             .antMatchers(
-                "/error/**","/user/**"
+                "/error/**",
+                "/authorize/**",
+                "/verification/**",
+                "/health",
+                "/health/**",
+                "/swagger-ui.html",
+                "/api-docs/**",
+                "/swagger-ui/index.html",
+                "/actuator/mappings",
+                "/swagger-ui/**"
             )
+            .antMatchers(HttpMethod.POST, "/user")
     }
 
     override fun configure(httpSecurity: HttpSecurity) {
@@ -61,7 +77,6 @@ class SecurityConfig(
 
             .and()
             .authorizeRequests()
-            .antMatchers("/api/**").permitAll()
             .anyRequest().authenticated()
 
             .and()

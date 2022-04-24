@@ -1,4 +1,4 @@
-package com.ably.assignment.application.jwt
+package com.ably.assignment.infrastructure.jwt
 
 import io.jsonwebtoken.*
 import org.slf4j.LoggerFactory
@@ -23,11 +23,8 @@ class TokenProvider(
     private val logger = LoggerFactory.getLogger(TokenProvider::class.java)
     private val AUTHORITIES_KEY = "auth"
     private val tokenValidityInMilliseconds = tokenValidityInSeconds * 1000
-    private lateinit var key: Key
-
-    fun afterPropertiesSet() {
-        val keyBytes = Decoders.BASE64.decode(secret)
-        key = Keys.hmacShaKeyFor(keyBytes)
+    private val key: Key = Decoders.BASE64.decode(secret).let{ keyBytes ->
+        Keys.hmacShaKeyFor(keyBytes)
     }
 
     fun createToken(authentication: Authentication): String {
@@ -53,6 +50,7 @@ class TokenProvider(
             claims[AUTHORITIES_KEY].toString().split(",").toTypedArray()
         )
             .map { role: String ->
+                println(role)
                 SimpleGrantedAuthority(
                     role
                 )
