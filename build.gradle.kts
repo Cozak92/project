@@ -7,6 +7,7 @@ plugins {
 	kotlin("plugin.spring") version "1.6.21"
 	kotlin("plugin.jpa") version "1.6.21"
 	kotlin("kapt") version "1.4.10"
+	id("org.springdoc.openapi-gradle-plugin") version "1.3.4"
 	idea
 	jacoco
 }
@@ -31,16 +32,21 @@ repositories {
 }
 
 dependencies {
+	implementation("org.springframework.boot:spring-boot-starter-actuator:2.6.7")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.0")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	implementation("mysql:mysql-connector-java")
+
+	implementation("org.springdoc:springdoc-openapi-ui:1.6.8")
+	implementation("org.springdoc:springdoc-openapi-security:1.6.8")
 
 	implementation("org.mapstruct:mapstruct:1.4.2.Final")
 	kapt("org.mapstruct:mapstruct-processor:1.4.2.Final")
@@ -48,17 +54,23 @@ dependencies {
 
 	// Test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.springframework.security:spring-security-test")
-	testImplementation("io.kotest:kotest-runner-junit5:5.0.2")
-	testImplementation("io.kotest:kotest-assertions-core:5.0.2")
+	testImplementation("io.mockk:mockk:1.12.3")
+	testImplementation("io.kotest:kotest-runner-junit5:5.2.2")
+	testImplementation("io.kotest:kotest-assertions-core-jvm:5.2.2")
 	testImplementation("io.kotest:kotest-extensions-spring:4.4.3")
-	testImplementation("com.ninja-squad:springmockk:3.0.1")
+	testImplementation("com.ninja-squad:springmockk:3.1.1")
+	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+
+	//Redis
+	implementation("org.springframework.boot:spring-boot-starter-data-redis:2.6.7")
 
 
 	// JWT
 	implementation("io.jsonwebtoken:jjwt-api:0.11.2")
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
+
+	implementation("com.twilio.sdk:twilio:8.29.0")
 }
 
 tasks.withType<KotlinCompile> {
