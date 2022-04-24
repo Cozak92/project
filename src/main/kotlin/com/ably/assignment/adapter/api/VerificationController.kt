@@ -14,14 +14,14 @@ import javax.validation.Valid
 class VerificationController(private val verificationInBoundPort: VerificationInBoundPort) {
 
     @PostMapping("/sms")
-    @Operation(description = "JWT 토큰을 기준으로 회원정보를 받아옵니다.")
+    @Operation(description = "SMS 코드를 발급을 합니다.")
     fun sendSms(@RequestBody @Valid phoneVerifyDto: PhoneVerifyingDto): ResponseEntity<String> {
         verificationInBoundPort.sendSms(phoneVerifyDto)
         return ResponseEntity.ok().body("Success: SMS code has been sent.")
     }
 
     @PostMapping("/sms/{verificationCode}")
-    @Operation(description = "/sms에서 발급된 인증코드를 통해 요청합니다. 응답값으로 회원 가입과 비밀번호 재설정에 필요한 SID가 발급됩니다.")
+    @Operation(description = "/sms에서 발급된 인증코드를 통해 요청합니다. 응답값으로 회원 가입과 비밀번호 재설정에 필요한 SID가 발급됩니다. SID는 Redis에서 5분뒤에 삭제됩니다.")
     fun verifySms(
         @RequestBody @Valid phoneVerifyDto: PhoneVerifyingDto,
         @PathVariable("verificationCode") verificationCode: String,

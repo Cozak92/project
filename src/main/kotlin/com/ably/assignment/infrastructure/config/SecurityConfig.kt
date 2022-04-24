@@ -7,9 +7,11 @@ import com.ably.assignment.infrastructure.jwt.TokenProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.config.core.GrantedAuthorityDefaults
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
@@ -17,7 +19,9 @@ import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
 
+
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfig(
     private val tokenProvider: TokenProvider,
     private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint,
@@ -25,19 +29,12 @@ class SecurityConfig(
 ) : WebSecurityConfigurerAdapter() {
 
     @Bean
-    fun corsFilter(): CorsFilter {
-        val source = UrlBasedCorsConfigurationSource()
-        val config = CorsConfiguration()
-        config.allowCredentials = true
-        config.addAllowedOrigin("*")
-        config.addAllowedHeader("*")
-        config.addAllowedMethod("*")
-        source.registerCorsConfiguration("/api/**", config)
-        return CorsFilter(source)
-    }
+    fun passwordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
-    fun passwordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder()
+    fun grantedAuthorityDefaults(): GrantedAuthorityDefaults? {
+        return GrantedAuthorityDefaults("") // Remove the ROLE_ prefix
+    }
 
     override fun configure(web: WebSecurity) {
         web.ignoring()
@@ -60,10 +57,12 @@ class SecurityConfig(
         httpSecurity
             // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
             .csrf().disable()
-            .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter::class.java)
+            .exceptionHandling()
+            .accessDeniedHandler(jwtAccessDeniedHandler)
+            .and()
             .exceptionHandling()
             .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-            .accessDeniedHandler(jwtAccessDeniedHandler)
+
 
             .and()
             .headers()

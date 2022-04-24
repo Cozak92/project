@@ -56,7 +56,7 @@ class UserController(private val userInBoundPort: UserInBoundPort) {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/{userId}")
-    @Operation(description = "ADMIN이 USER의 회원 정보를 확인할때 사용합니다.")
+    @Operation(description = "ADMIN이 User의 ID를 통해 USER의 회원 정보를 확인할때 사용합니다.")
     fun getUserInfo( @PathVariable("userId") userId: Long):  ResponseEntity<Response> {
         val userInfo = userInBoundPort.getUserInfo(userId)
         val response = Response(message = "User inquiry succeeded",

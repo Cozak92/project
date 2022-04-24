@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 @EnableJpaAuditing
 @SpringBootApplication
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 class AssignmentApplication
 
 fun main(args: Array<String>) {

@@ -39,14 +39,14 @@ class TokenProvider(
             .compact()
     }
 
-    fun getAuthentication(token: String?): Authentication {
+    fun getAuthentication(token: String): Authentication {
         val claims = Jwts
             .parserBuilder()
             .setSigningKey(key)
             .build()
             .parseClaimsJws(token)
             .body
-        val authorities: Collection<GrantedAuthority> = Arrays.stream(
+        val authorities: List<GrantedAuthority> = Arrays.stream(
             claims[AUTHORITIES_KEY].toString().split(",").toTypedArray()
         )
             .map { role: String ->
