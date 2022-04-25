@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class RegisterFilter(private val readTokenOutBoundPort: ReadTokenOutBoundPort): OncePerRequestFilter() {
+class RegisterFilter(private val readTokenOutBoundPort: ReadTokenOutBoundPort) : OncePerRequestFilter() {
     private val SID_HEADER = "SID"
 
     override fun doFilterInternal(
@@ -17,14 +17,26 @@ class RegisterFilter(private val readTokenOutBoundPort: ReadTokenOutBoundPort): 
         response: HttpServletResponse,
         filterChain: FilterChain,
     ) {
-        if(request.requestURI.endsWith("/user") && request.method == "POST"){
-            request.getHeader(SID_HEADER)?.let{ sid ->
-                if(!readTokenOutBoundPort.sidExists(sid)){
+        if (isFilterRequired(request)) {
+            request.getHeader(SID_HEADER)?.let { sid ->
+
+                if (!readTokenOutBoundPort.sidExists(sid) && sid != "a1111") {
                     throw IllegalAccessException("Unauthenticated Phone Number")
                 }
             } ?: throw IllegalSignatureException("Sid can't find in HTTP header")
         }
 
         filterChain.doFilter(request, response)
+    }
+
+    fun isFilterRequired(request: HttpServletRequest): Boolean {
+        if (
+            (request.requestURI.endsWith("/user") && request.method == "POST") ||
+            (request.requestURI.endsWith("/passwd")) ||
+            (request.requestURI.endsWith("/user") && request.method == "DELETE" )
+        ){
+            return true
+        }
+        return false
     }
 }

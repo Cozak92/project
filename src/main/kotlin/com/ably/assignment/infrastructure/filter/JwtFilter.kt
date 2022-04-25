@@ -26,7 +26,6 @@ class JwtFilter(private val tokenProvider: TokenProvider): OncePerRequestFilter(
             if(tokenProvider.validateToken(token)){
                 tokenProvider.getAuthentication(token).also { authentication ->
                     SecurityContextHolder.getContext().authentication = authentication
-                    println("\"Security Context에 '${authentication.name}' 인증 정보를 저장했습니다, uri: $requestURI\"")
                     logger.debug("Security Context에 '${authentication.name}' 인증 정보를 저장했습니다, uri: $requestURI")
                 }
             }
