@@ -3,7 +3,7 @@ package com.ably.assignment.adapter.persistence
 import com.ably.assignment.application.port.persistence.ReadOutBoundPort
 import com.ably.assignment.domain.model.User
 
-class ReadQuerydslAdapter: ReadOutBoundPort {
+class QuerydslAdapter: ReadOutBoundPort {
 
     override fun existsByEmail(email: String): Boolean {
         TODO("Not yet implemented")

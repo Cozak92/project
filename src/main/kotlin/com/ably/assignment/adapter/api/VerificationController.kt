@@ -27,7 +27,6 @@ class VerificationController(private val verificationInBoundPort: VerificationIn
         @PathVariable("verificationCode") verificationCode: String,
     ): ResponseEntity<SidDto> {
         val sidDto = verificationInBoundPort.verifySms(phoneVerifyDto, verificationCode)
-        println(sidDto)
         return ResponseEntity.ok().body(sidDto)
     }
 

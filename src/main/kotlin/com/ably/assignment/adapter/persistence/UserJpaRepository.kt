@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface UserJpaRepository: JpaRepository<UserData, Long> {
-    fun findByEmail(email: String): UserData?
+    fun findByEmailAndIsDeletedFalse(email: String): UserData?
     @EntityGraph(attributePaths = ["authorities"])
     fun findOneWithAuthoritiesByLastName(name: String): UserData?
-    fun findByPhoneCountryCodeAndPhoneNumber(countryCode: String, number: String): UserData?
+    fun findByPhoneCountryCodeAndPhoneNumberAndIsDeletedFalse(countryCode: String, number: String): UserData?
 }

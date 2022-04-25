@@ -4,42 +4,63 @@ import com.ably.assignment.adapter.api.model.UserDto.*
 import com.ably.assignment.application.port.api.UserInBoundPort
 import com.ably.assignment.application.usecase.ReadUserUseCase
 import com.ably.assignment.application.usecase.RegisterUserUseCase
+import com.ably.assignment.application.usecase.UpdateUserUseCase
+import com.ably.assignment.domain.vo.Authority
 import com.ably.assignment.infrastructure.annotations.Adapter
-import com.ably.assignment.infrastructure.util.SecurityUtil
 
 @Adapter
 class UserAdapter(
     private val registerUserUseCase: RegisterUserUseCase,
     private val readUserUseCase: ReadUserUseCase,
-    private val securityUtil: SecurityUtil,
+    private val UpdateUserUseCase: UpdateUserUseCase
+
 ) : UserInBoundPort {
-    override fun register(userSaveDto: UserRegisterDto): UserResponseDto {
-        return registerUserUseCase.register(userSaveDto)
+    override fun register(userRegisterDto: UserRegisterDto): UserResponseDto {
+        val user = userRegisterDto.toDomainModel(Authority.USER)
+        val registeredUser = registerUserUseCase.register(user)
+        return registeredUser.toResponseDto()
     }
 
     override fun getMyUserInfo(): UserResponseDto {
-        return securityUtil.currentUserEmail?.let { email ->
-            readUserUseCase.readByEmail(email)
-        } ?: throw IllegalStateException("user's current email doesn't exist")
+        val inquiredUser = readUserUseCase.readByContext()
+        return inquiredUser.toResponseDto()
     }
 
     override fun getUserInfo(userId: Long): UserResponseDto{
-        return readUserUseCase.readById(userId)
+        val inquiredUser = readUserUseCase.readById(userId)
+        return inquiredUser.toResponseDto()
     }
 
-    override fun updateMyUserInfo() {
+    override fun updateMyUserInfo(userId: Long, userUpdateDto: UserUpdateDto): UserResponseDto {
+        val user = userUpdateDto.toDomainModel(Authority.USER)
+        user.id = userId
+        val updatedUser = UpdateUserUseCase.updateUserInfo(user)
+        return updatedUser.toResponseDto()
+    }
+
+    override fun changeMyPasswd(userId: Long, userUpdatePasswdDto: UserUpdatePasswdDto):UserResponseDto {
+        if (userUpdatePasswdDto.firstPassword != userUpdatePasswdDto.secondPassword) {
+            throw IllegalStateException("Passwords doesn't match")
+        }
+
+        val user = userUpdatePasswdDto.toDomainModel()
+        user.id = userId
+        val passwdChangedUser = UpdateUserUseCase.updateUserPasswd(user)
+
+        return passwdChangedUser.toResponseDto()
+    }
+
+    override fun unregister(userId: Long): UserResponseDto {
         TODO("Not yet implemented")
     }
 
-    override fun updateUserInfo() {
-        TODO("Not yet implemented")
-    }
+    override fun isSameContextUserAsRequestUser(userId: Long): Boolean {
+        val requestUser = readUserUseCase.readById(userId)
+        val contextUser = readUserUseCase.readByContext()
 
-    override fun changeMyPasswd() {
-        TODO("Not yet implemented")
-    }
-
-    override fun unregister() {
-        TODO("Not yet implemented")
+        if(requestUser.id != contextUser.id){
+            return false
+        }
+        return true
     }
 }

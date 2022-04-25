@@ -5,11 +5,13 @@ import com.ably.assignment.domain.vo.Authority
 import com.ably.assignment.domain.vo.FullName
 import com.ably.assignment.domain.model.Phone
 import com.ably.assignment.domain.vo.Information
+import org.hibernate.annotations.DynamicUpdate
 import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
 @Table(name = "user")
+@DynamicUpdate
 data class UserData(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,22 +21,22 @@ data class UserData(
     var password: String,
 
     @Column(nullable = false, length = 200)
-    val email: String,
+    var email: String,
 
     @Column(nullable = false, length = 100)
-    val nickname: String,
+    var nickname: String,
 
     @Column(nullable = false, length = 50)
-    val firstName: String,
+    var firstName: String,
 
     @Column(nullable = false, length = 50)
-    val lastName: String,
+    var lastName: String,
 
     @Column(nullable = false, length = 20)
-    val phoneCountryCode: String,
+    var phoneCountryCode: String,
 
     @Column(nullable = false)
-    val phoneNumber: String,
+    var phoneNumber: String,
 
     var deletedAt: LocalDateTime? = null,
 

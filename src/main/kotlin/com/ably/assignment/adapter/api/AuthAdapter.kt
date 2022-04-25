@@ -7,7 +7,8 @@ import com.ably.assignment.infrastructure.annotations.Adapter
 
 @Adapter
 class AuthAdapter(private val authUseCase: AuthUseCase): AuthInBoundPort {
-    override fun authorize(userAuthDto: UserAuthDto): UserTokenDto {
-        return authUseCase.doAuthorize(userAuthDto)
+    override fun authorize(userAuthDto: UserAuthDto): UserAuthResponseDto {
+        val authorization = authUseCase.doAuthorize(userAuthDto.toDomainModel())
+        return authorization.toUserAuthResponseDto()
     }
 }
