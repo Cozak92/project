@@ -1,4 +1,7 @@
- steps:
- - name: gradle:7.6.1-jdk8
+steps:
+- name: gradle:7.6.1-jdk8
    entrypoint: gradle
    args: ['test']
+- name: gradle:7.6.1-jdk8
+  entrypoint: gradle
+  args: ['assemble']
