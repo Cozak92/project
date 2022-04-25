@@ -14,10 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.core.GrantedAuthorityDefaults
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-import org.springframework.web.filter.CorsFilter
+import org.springframework.security.web.access.AccessDeniedHandler
 
 
 @Configuration
@@ -32,7 +29,7 @@ class SecurityConfig(
     fun passwordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
-    fun grantedAuthorityDefaults(): GrantedAuthorityDefaults? {
+    fun grantedAuthorityDefaults(): GrantedAuthorityDefaults {
         return GrantedAuthorityDefaults("") // Remove the ROLE_ prefix
     }
 
@@ -42,13 +39,12 @@ class SecurityConfig(
                 "/error/**",
                 "/authorize/**",
                 "/verification/**",
-                "/health",
-                "/health/**",
                 "/swagger-ui.html",
                 "/api-docs/**",
                 "/swagger-ui/index.html",
-                "/actuator/mappings",
-                "/swagger-ui/**"
+                "/swagger-ui/**",
+                "/actuator/**",
+                "/profile"
             )
             .antMatchers(HttpMethod.POST, "/user")
     }
@@ -62,8 +58,6 @@ class SecurityConfig(
             .and()
             .exceptionHandling()
             .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-
-
             .and()
             .headers()
             .frameOptions()
