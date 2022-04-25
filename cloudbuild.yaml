@@ -6,6 +6,7 @@ steps:
     entrypoint: gradle
     args: ["assemble"]
   - name: gcr.io/cloud-builders/docker
+    options.logging: CLOUD_LOGGING_ONLY
     args: ["build", "-t", "gcr.io/ably-project/ably-project", "--build-arg=JAR_FILE=build/libs/ably-1.0.0.jar", "."]
 images: ["gcr.io/ably-project/ably-project"]
  
