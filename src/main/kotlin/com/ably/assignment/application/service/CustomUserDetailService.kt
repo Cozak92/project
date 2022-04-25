@@ -23,9 +23,9 @@ class CustomUserDetailService(private val readOutBoundPort: ReadOutBoundPort) : 
 
     }
     private fun createUser(user: User): org.springframework.security.core.userdetails.User {
-        val grantedAuthorities: List<GrantedAuthority> = user.authorities.map { authority -> SimpleGrantedAuthority(authority.role) }.toList()
+        val grantedAuthorities: List<GrantedAuthority> = user.authorities!!.map { authority -> SimpleGrantedAuthority(authority.role) }.toList()
         return org.springframework.security.core.userdetails.User(
-            user.information.email,
+            user.information!!.email,
             user.password,
             grantedAuthorities
         )

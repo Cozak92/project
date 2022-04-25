@@ -6,12 +6,8 @@ import com.ably.assignment.application.port.persistence.WriteTokenOutBoundPort
 import com.ably.assignment.application.usecase.SmsUseCase
 import com.ably.assignment.domain.model.Phone
 import com.ably.assignment.infrastructure.util.TwilioUtil
-import com.twilio.Twilio
-import com.twilio.rest.verify.v2.service.Verification
-import com.twilio.rest.verify.v2.service.VerificationCheck
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import javax.transaction.Transactional
+import org.springframework.transaction.annotation.Transactional
 
 
 @Service

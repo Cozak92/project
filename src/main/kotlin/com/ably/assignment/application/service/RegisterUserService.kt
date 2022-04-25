@@ -4,10 +4,11 @@ import com.ably.assignment.adapter.api.model.UserDto.*
 import com.ably.assignment.application.port.persistence.ReadOutBoundPort
 import com.ably.assignment.application.port.persistence.WriteOutBoundPort
 import com.ably.assignment.application.usecase.RegisterUserUseCase
+import com.ably.assignment.domain.model.User
 import com.ably.assignment.domain.vo.Authority
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import javax.transaction.Transactional
+import org.springframework.transaction.annotation.Transactional
 
 
 @Service
@@ -15,21 +16,20 @@ class RegisterUserService(private val writeOutBoundPort: WriteOutBoundPort, priv
     RegisterUserUseCase {
 
     @Transactional
-    override fun register(userSaveDto: UserRegisterDto): UserResponseDto {
-        val newUser = userSaveDto.toDomainModel(Authority.USER)
-        newUser.passwordEncoder = passwordEncoder
+    override fun register(user: User): User {
+        user.passwordEncoder = passwordEncoder
 
-        newUser.phone.isValid()
-        newUser.encryptPassword()
+        user.phone!!.isValid()
+        user.encryptPassword()
 
-        if(readOutBoundPort.existsByEmail(newUser.information.email)){
+        if(readOutBoundPort.existsByEmail(user.information!!.email!!)){
             throw IllegalArgumentException("User Email already exists")
         }
-        if (readOutBoundPort.existsByPhone(newUser.phone.countryCode, newUser.phone.numberLine)){
+        if (readOutBoundPort.existsByPhone(user.phone!!.countryCode, user.phone!!.numberLine)){
             throw IllegalArgumentException("User phone number already exists")
         }
 
-        return writeOutBoundPort.save(newUser).toResponseDto()
+        return writeOutBoundPort.save(user)
     }
 
 }
