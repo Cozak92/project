@@ -1,9 +1,6 @@
 steps:
   - name: gradle:7.4.2-jdk8
     entrypoint: gradle
-    args: ["test"]
-  - name: gradle:7.4.2-jdk8
-    entrypoint: gradle
     args: ["assemble"]
   - name: gcr.io/cloud-builders/docker
     args: ["build", "-t", "gcr.io/ably-project/ably-project", "--build-arg=JAR_FILE=build/libs/ably-1.0.0.jar", "."]
