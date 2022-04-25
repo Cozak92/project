@@ -17,7 +17,7 @@ class OpenApiConfig {
         val info = Info().title("Ably-Backend API").version(appVersion)
             .description("에이블리 백엔드 과제")
             .termsOfService("http://swagger.io/terms/")
-            .contact(Contact().name("Blog").url("https://velog.io/@roo333").email("cozak354@gmail.com"))
+            .contact(Contact().name("신승혁").url("https://velog.io/@roo333").email("cozak354@gmail.com"))
             .license(License().name("Apache License Version 2.0").url("http://www.apache.org/licenses/LICENSE-2.0"))
         return OpenAPI()
             .components(Components())

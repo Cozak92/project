@@ -50,7 +50,6 @@ class TokenProvider(
             claims[AUTHORITIES_KEY].toString().split(",").toTypedArray()
         )
             .map { role: String ->
-                println(role)
                 SimpleGrantedAuthority(
                     role
                 )
