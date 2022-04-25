@@ -8,3 +8,5 @@ steps:
   - name: gcr.io/cloud-builders/docker
     args: ["build", "-t", "gcr.io/ably-project/ably-project", "--build-arg=JAR_FILE=build/libs/ably-1.0.0.jar", "."]
 images: ["gcr.io/ably-project/ably-project"]
+ options:
+ logging: CLOUD_LOGGING_ONLY
