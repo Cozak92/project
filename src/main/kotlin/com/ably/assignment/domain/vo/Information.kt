@@ -4,8 +4,8 @@ import javax.validation.constraints.NotNull
 
 
 data class Information(
-    @NotNull
-    val email: String,
-    @NotNull
+
+    val email: String? = null,
+
     val nickname: String,
 )

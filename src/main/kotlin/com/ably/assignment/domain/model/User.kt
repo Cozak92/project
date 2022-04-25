@@ -10,48 +10,44 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import javax.validation.constraints.NotNull
 
 data class User(
-    val id: Long? = null,
+    var id: Long? = null,
 
-    var password: String,
+    var password: String? = null,
 
-    @NotNull
-    val fullName: FullName,
+    var fullName: FullName? = null,
 
-    @NotNull
-    val phone: Phone,
+    var phone: Phone? = null,
 
-    @NotNull
-    val information: Information,
+    var information: Information? = null,
 
-    @NotNull
-    val authorities: MutableSet<Authority>,
+    var authorities: MutableSet<Authority>? = null,
 
     var passwordEncoder: PasswordEncoder? = null,
 
-    ){
+    ) {
     fun toJpaEntity(): UserData = UserData(
         id = id,
-        password = password,
-        firstName = fullName.firstName,
-        lastName = fullName.lastName,
-        phoneCountryCode = phone.countryCode,
-        phoneNumber = phone.numberLine,
-        email = information.email,
-        nickname = information.nickname,
-        authorities = authorities.map { AuthorityData(it.role) }.toMutableSet()
+        password = password!!,
+        firstName = fullName!!.firstName,
+        lastName = fullName!!.lastName,
+        phoneCountryCode = phone!!.countryCode,
+        phoneNumber = phone!!.numberLine,
+        email = information!!.email!!,
+        nickname = information!!.nickname,
+        authorities = authorities!!.map { AuthorityData(it.role) }.toMutableSet()
     )
 
     fun toResponseDto(): UserResponseDto = UserResponseDto(
         id = id!!,
-        firstName = fullName.firstName,
-        lastName = fullName.lastName,
-        phoneCountryCode = phone.countryCode,
-        phoneNumber = phone.numberLine,
-        email = information.email,
-        nickname = information.nickname,
+        firstName = fullName!!.firstName,
+        lastName = fullName!!.lastName,
+        phoneCountryCode = phone!!.countryCode,
+        phoneNumber = phone!!.numberLine,
+        email = information!!.email!!,
+        nickname = information!!.nickname,
     )
 
-    fun encryptPassword(){
+    fun encryptPassword() {
         password = passwordEncoder!!.encode(password)
     }
 }
