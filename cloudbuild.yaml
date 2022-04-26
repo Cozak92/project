@@ -2,6 +2,9 @@ steps:
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: 'bash'
   args: [ '-c', "gcloud secrets versions access latest --secret=ably-project-yml-profile > src/main/resources/application.yml" ]
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  args: [ '-c', "gcloud secrets versions access latest --secret=cloud-sql-credential > src/main/resources/sound-yew-347405-ce2e3049cddf.json" ]
 - name: gradle:7.4.1-jdk8
   entrypoint: gradle
   args: ['clean','build','--stacktrace','-info']
