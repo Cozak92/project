@@ -123,7 +123,7 @@ class ConnectionPoolContextListener : ServletContextListener {
     companion object {
         // Saving credentials in environment variables is convenient, but not secure - consider a more
         // secure solution such as https://cloud.google.com/kms/ to help keep secrets safe.
-        private val INSTANCE_CONNECTION_NAME = "ably-assignment"
+        private val INSTANCE_CONNECTION_NAME = "sound-yew-347405:asia-northeast3:ably-assignment"
         private val DB_USER = "root"
         private val DB_PASS = "!tlstmdgur11"
         private val DB_NAME = "ably"
