@@ -10,5 +10,9 @@ steps:
   args: ['clean','bootjar','--stacktrace']
 - name: gcr.io/cloud-builders/docker
   args: ['build', '-t', 'gcr.io/sound-yew-347405/ably-project', '--build-arg=JAR_FILE=build/libs/assignment-0.0.1-SNAPSHOT.jar', '.']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args: ['-c', 'gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy']
+timeout: '1600s'
 
 images: ['gcr.io/sound-yew-347405/ably-project']
