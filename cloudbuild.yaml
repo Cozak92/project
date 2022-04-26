@@ -9,6 +9,6 @@ steps:
   entrypoint: gradle
   args: ['clean','build','--stacktrace']
 - name: gcr.io/cloud-builders/docker
-  args: ['build', '-t', 'gcr.io/sound-yew-347405/ably-project', '--build-arg=JAR_FILE=build/libs/*SNAPSHOT', '.']
+  args: ['build', '-t', 'gcr.io/sound-yew-347405/ably-project', '--build-arg=JAR_FILE=build/libs/*', '.']
 
 images: ['gcr.io/sound-yew-347405/ably-project']
