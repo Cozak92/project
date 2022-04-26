@@ -1,4 +1,4 @@
 steps:
-- name: gradle:5.6.2-jdk8
-  entrypoint: gradle
-  args: ['--version']
+- name: gcr.io/cloud-builders/docker
+  args: ['build', '-t', 'gcr.io/sound-yew-347405/ably-project', '--build-arg=JAR_FILE=build/libs/*SNAPSHOT', '.']
+images: ['gcr.io/sound-yew-347405/ably-project']
