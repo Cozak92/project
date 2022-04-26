@@ -4,7 +4,7 @@ steps:
   args: [ '-c', "gcloud secrets versions access latest --secret=ably-aplication-yml > src/main/resources/application.yml" ]
 - name: gradle:7.4.1-jdk8
   entrypoint: gradle
-  args: ['clean','build','--stacktrace']
+  args: ['clean','build','--stacktrace','-info']
 - name: gcr.io/cloud-builders/docker
   args: ['build', '-t', 'gcr.io/sound-yew-347405/ably-project', '--build-arg=JAR_FILE=build/libs/*SNAPSHOT', '.']
 
