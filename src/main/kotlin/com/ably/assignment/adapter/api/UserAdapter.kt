@@ -12,7 +12,7 @@ import com.ably.assignment.infrastructure.annotations.Adapter
 class UserAdapter(
     private val registerUserUseCase: RegisterUserUseCase,
     private val readUserUseCase: ReadUserUseCase,
-    private val UpdateUserUseCase: UpdateUserUseCase
+    private val updateUserUseCase: UpdateUserUseCase
 
 ) : UserInBoundPort {
     override fun register(userRegisterDto: UserRegisterDto): UserResponseDto {
@@ -34,7 +34,7 @@ class UserAdapter(
     override fun updateMyUserInfo(userId: Long, userUpdateDto: UserUpdateDto): UserResponseDto {
         val user = userUpdateDto.toDomainModel(Authority.USER)
         user.id = userId
-        val updatedUser = UpdateUserUseCase.updateUserInfo(user)
+        val updatedUser = updateUserUseCase.updateUserInfo(user)
         return updatedUser.toResponseDto()
     }
 
@@ -45,7 +45,7 @@ class UserAdapter(
 
         val user = userUpdatePasswdDto.toDomainModel()
         user.id = userId
-        val passwdChangedUser = UpdateUserUseCase.updateUserPasswd(user)
+        val passwdChangedUser = updateUserUseCase.updateUserPasswd(user)
 
         return passwdChangedUser.toResponseDto()
     }
