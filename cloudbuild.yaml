@@ -7,8 +7,8 @@ steps:
   args: [ '-c', "gcloud secrets versions access latest --secret=cloud-sql-credential > src/main/resources/sound-yew-347405-ce2e3049cddf.json" ]
 - name: gradle:7.4.1-jdk8
   entrypoint: gradle
-  args: ['clean','build','--stacktrace']
+  args: ['clean','bootjar','--stacktrace']
 - name: gcr.io/cloud-builders/docker
-  args: ['build', '-t', 'gcr.io/sound-yew-347405/ably-project', '--build-arg=JAR_FILE=build/libs/*', '.']
+  args: ['build', '-t', 'gcr.io/sound-yew-347405/ably-project', '--build-arg=JAR_FILE=build/libs/assignment-0.0.1-SNAPSHOT.jar', '.']
 
 images: ['gcr.io/sound-yew-347405/ably-project']
