@@ -1,0 +1,18 @@
+steps:
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  args: [ '-c', "gcloud secrets versions access latest --secret=ably-project-yml-profile > src/main/resources/application.yml" ]
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  args: [ '-c', "gcloud secrets versions access latest --secret=cloud-sql-credential > src/main/resources/sound-yew-347405-ce2e3049cddf.json" ]
+- name: gradle:7.4.1-jdk8
+  entrypoint: gradle
+  args: ['clean','bootjar','--stacktrace']
+- name: gcr.io/cloud-builders/docker
+  args: ['build', '-t', 'gcr.io/sound-yew-347405/ably-project', '--build-arg=JAR_FILE=build/libs/assignment-0.0.1-SNAPSHOT.jar', '.']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args: ['-c', 'mv Dockerfile app-engine/Dockerfile && gcloud app deploy app-engine/app.yaml']
+timeout: '1600s'
+
+images: ['gcr.io/sound-yew-347405/ably-project']
