@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 import javax.servlet.http.HttpServletRequest
 
 
-@RestControllerAdvice
+@ControllerAdvice
 class GlobalExceptionHandler {
     private fun makeErrorResponse(errors: MutableList<Error>, request: HttpServletRequest): ErrorResponse =
         ErrorResponse().apply {
@@ -53,7 +53,7 @@ class GlobalExceptionHandler {
         IllegalStateException::class,
         IllegalArgumentException::class)
     fun exceptionHandler(
-        e: HttpMessageNotReadableException,
+        e: Exception,
         request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse> {
         val errors = mutableListOf<Error>()
