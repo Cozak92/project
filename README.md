@@ -5,12 +5,18 @@
 ## 주요 기술 스택
 
 Kotlin 1.6
+
 Spring boot 2.6.4
+
 Mysql 8.0
+
 Redis
 
+
 Cloud SQL
+
 CLoud Build
+
 App Engine
 
 ---
@@ -19,6 +25,8 @@ App Engine
 
 
 ![image](https://user-images.githubusercontent.com/38750489/165446820-635b6f86-af3e-410a-99f7-9f5c3bb38715.png)
+
+유저와 권한만 있는 단순한 테이블 구조입니다. 유저랑 어드민이랑 서로 권한을 다르게 하기 위해 1:N이 아닌 N:M으로 관계를 설정했습니다.
 
 ---
 
