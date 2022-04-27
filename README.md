@@ -41,9 +41,19 @@ App Engine
 
 ![hexagonal-architecture_hu6764515d7030d45af6f7f498c79e292b_50897_956x0_resize_box_3](https://user-images.githubusercontent.com/38750489/165505245-778ba3c6-2d52-4713-b49f-b53d7ddde752.png)
 
-유연한 소프트웨어 구조를 갖기 위해 오버 엔지니어링이긴 하지만 모놀리 헥사고날 아키텍처를 기반으로 개발했습니다.
+오버 엔지니어링이긴 하지만 유연한 소프트웨어 구조를 갖기 위해 모놀리 헥사고날 아키텍처를 기반으로 개발했습니다.
 
 ---
+
+# API
+
+https://ably-project-ifvfniimwq-du.a.run.app/api/v1/swagger-ui/index.html
+
+### 계정 정보
+
+* user 
+
+해당 주소에서 
 
 ## 전화 인증
 
