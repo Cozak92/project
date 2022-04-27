@@ -104,11 +104,13 @@ class UserController(private val userInBoundPort: UserInBoundPort,) {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @DeleteMapping("/{userId}")
     @Operation(description = "JWT 토큰을 기준으로 현재 회원의 탈퇴를 진행합니다. 요청의 user id를 통해 얻은 user와 토큰의 정보 user를 교차검증합니다.")
-    fun unregister(@PathVariable("userId") userId: Long) {
+    fun unregister(@PathVariable("userId") userId: Long): ResponseEntity<Any> {
         if(!userInBoundPort.isSameContextUserAsRequestUser(userId)){
             throw IllegalStateException("Token User don't match with Request User")
         }
-        TODO("Not yet implemented")
+        userInBoundPort.unregister(userId)
+
+        return ResponseEntity.ok().body(null)
     }
 
 

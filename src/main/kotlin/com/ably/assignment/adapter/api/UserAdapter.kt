@@ -2,6 +2,7 @@ package com.ably.assignment.adapter.api
 
 import com.ably.assignment.adapter.api.model.UserDto.*
 import com.ably.assignment.application.port.api.UserInBoundPort
+import com.ably.assignment.application.usecase.DeleteUserUseCase
 import com.ably.assignment.application.usecase.ReadUserUseCase
 import com.ably.assignment.application.usecase.RegisterUserUseCase
 import com.ably.assignment.application.usecase.UpdateUserUseCase
@@ -12,7 +13,8 @@ import com.ably.assignment.infrastructure.annotations.Adapter
 class UserAdapter(
     private val registerUserUseCase: RegisterUserUseCase,
     private val readUserUseCase: ReadUserUseCase,
-    private val updateUserUseCase: UpdateUserUseCase
+    private val updateUserUseCase: UpdateUserUseCase,
+    private val deleteUserUseCase: DeleteUserUseCase
 
 ) : UserInBoundPort {
     override fun register(userRegisterDto: UserRegisterDto): UserResponseDto {
@@ -50,8 +52,8 @@ class UserAdapter(
         return passwdChangedUser.toResponseDto()
     }
 
-    override fun unregister(userId: Long): UserResponseDto {
-        TODO("Not yet implemented")
+    override fun unregister(userId: Long) {
+        deleteUserUseCase.deleteById(userId)
     }
 
     override fun isSameContextUserAsRequestUser(userId: Long): Boolean {
