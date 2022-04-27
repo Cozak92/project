@@ -22,31 +22,9 @@ App Engine
 
 ---
 
-## 파일 구조
+## [파일 구조](https://github.com/Cozak92/project/blob/main/tree.text)
 
 
-├─adapter
-│  ├─api
-│  │  └─model
-│  └─persistence
-│      └─model
-├─application
-
-│  ├─port
-│  │  ├─api
-│  │  └─persistence
-│  ├─service
-│  └─usecase
-├─domain
-│  ├─model
-│  └─vo
-└─infrastructure
-    ├─annotations
-    ├─cloudsql
-    ├─config
-    ├─filter
-    ├─jwt
-    └─util
 
 
 ---
