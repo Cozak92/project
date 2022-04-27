@@ -9,6 +9,6 @@ interface UserInBoundPort {
     fun getUserInfo(userId: Long): UserResponseDto
     fun updateMyUserInfo(userId: Long, userUpdateDto: UserUpdateDto): UserResponseDto
     fun changeMyPasswd(userId: Long, userUpdatePasswdDto: UserUpdatePasswdDto): UserResponseDto
-    fun unregister(userId: Long): UserResponseDto
+    fun unregister(userId: Long)
     fun isSameContextUserAsRequestUser(userId: Long): Boolean
 }
