@@ -55,6 +55,7 @@ Cloud Run
 https://ably-project-ifvfniimwq-du.a.run.app/api/v1/swagger-ui/index.html
 
 해당 주소에서 API 깔끔하게 볼 수 있습니다. 실제 요청은 header가 없어서 불가능 합니다.😥
+API에 대한 설명도 작성 되어있습니다.
 
 https://www.getpostman.com/collections/143f3c21ab1c4ee4c710
 
