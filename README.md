@@ -61,6 +61,8 @@ https://www.getpostman.com/collections/143f3c21ab1c4ee4c710
 
 Postman Collection입니다.
 
+첫 호출시 Cloud Run 콜드스타트 때문에 응답이 느릴 수 있습니다!
+
 ### 계정 정보
 
 * user 
