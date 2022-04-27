@@ -10,11 +10,12 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.RestControllerAdvice
 import java.time.LocalDateTime
 import javax.servlet.http.HttpServletRequest
 
 
-@ControllerAdvice
+@RestControllerAdvice
 class GlobalExceptionHandler {
     private fun makeErrorResponse(errors: MutableList<Error>, request: HttpServletRequest): ErrorResponse =
         ErrorResponse().apply {
@@ -50,7 +51,6 @@ class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException::class,
         IllegalAccessException::class,
         IllegalStateException::class,
-        IllegalArgumentException::class,
         IllegalArgumentException::class)
     fun exceptionHandler(
         e: HttpMessageNotReadableException,
