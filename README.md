@@ -104,8 +104,12 @@ Postman Collection입니다.
 ## 회원 정보 수정
 
 
-* **PUT** /api/v1/user - 회원 정보를 받아 회원을 수정합니다.
-* **PATCH** /api/v1/user/passwd - 유저 비밀번호를 수정합니다. 휴대폰 인증에서 받은 SID가 헤더에 들어있어야 합니다.
+* **PUT** /api/v1/user/{userId} - 회원 정보를 받아 회원을 수정합니다.
+* **PATCH** /api/v1/user/{userId}/passwd - 유저 비밀번호를 수정합니다. 휴대폰 인증에서 받은 SID가 헤더에 들어있어야 합니다.
+
+## 회원 탈퇴
+
+* **Delete** /api/v1/user/{userId} - 해당 userId로 탈퇴를 진행합니다.
 
 
 
