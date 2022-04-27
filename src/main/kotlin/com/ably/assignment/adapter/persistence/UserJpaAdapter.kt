@@ -1,14 +1,17 @@
 package com.ably.assignment.adapter.persistence
 
+import com.ably.assignment.application.port.persistence.DeleteOutBoundPort
 import com.ably.assignment.application.port.persistence.ReadOutBoundPort
 import com.ably.assignment.application.port.persistence.WriteOutBoundPort
 import com.ably.assignment.domain.model.User
 import com.ably.assignment.infrastructure.annotations.Adapter
 import org.springframework.data.repository.findByIdOrNull
+import java.time.LocalDateTime
 
 
 @Adapter
-class UserJpaAdapter(private val userJpaRepository: UserJpaRepository) : ReadOutBoundPort, WriteOutBoundPort {
+class UserJpaAdapter(private val userJpaRepository: UserJpaRepository) : ReadOutBoundPort, WriteOutBoundPort,
+    DeleteOutBoundPort {
 
     override fun existsByEmail(email: String): Boolean {
         return userJpaRepository.findByEmailAndIsDeletedFalse(email)?.let {
@@ -17,7 +20,7 @@ class UserJpaAdapter(private val userJpaRepository: UserJpaRepository) : ReadOut
     }
 
     override fun existsById(userId: Long): Boolean {
-        return userJpaRepository.findByIdOrNull(userId)?.let {
+        return userJpaRepository.findByIdAndIsDeletedFalse(userId)?.let {
             true
         } ?: false
     }
@@ -56,5 +59,12 @@ class UserJpaAdapter(private val userJpaRepository: UserJpaRepository) : ReadOut
             password = user.password!!
         }
         return changedUser.toDomainModel()
+    }
+
+    override fun deleteById(userId: Long) {
+        val deletedUser = userJpaRepository.findByIdOrNull(userId)!!.apply {
+            isDeleted = true
+            deletedAt = LocalDateTime.now()
+        }
     }
 }

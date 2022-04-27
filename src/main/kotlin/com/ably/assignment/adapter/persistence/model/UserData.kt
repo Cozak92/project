@@ -41,7 +41,7 @@ data class UserData(
     var deletedAt: LocalDateTime? = null,
 
     @AttributeOverride(name = "value", column = Column(name = "isDeleted"))
-    val isDeleted: Boolean = false,
+    var isDeleted: Boolean = false,
 
     @ManyToMany
     @JoinTable(
