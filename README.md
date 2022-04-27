@@ -17,7 +17,12 @@ Cloud SQL
 
 CLoud Build
 
-App Engine
+Cloud Run
+
+---
+
+![](https://velog.velcdn.com/images/roo333/post/63bd42bc-afcd-44be-9ae9-d3d843ad9b2e/image.png)
+
 
 ---
 
@@ -30,7 +35,7 @@ App Engine
 
 ---
 
-## [파일 구조](https://github.com/Cozak92/project/blob/main/tree.text)
+## [파일 구조](https://github.com/Cozak92/project/blob/main/src/main/resources/tree.text)
 
 
 
@@ -49,11 +54,24 @@ App Engine
 
 https://ably-project-ifvfniimwq-du.a.run.app/api/v1/swagger-ui/index.html
 
+해당 주소에서 API 깔끔하게 볼 수 있습니다. 실제 요청은 header가 없어서 불가능 합니다.😥
+API에 대한 설명도 작성 되어있습니다.
+
+https://www.getpostman.com/collections/143f3c21ab1c4ee4c710
+
+Postman Collection입니다.
+
 ### 계정 정보
 
 * user 
+  * email - user1@user.com
+  * passwrod - user1
 
-해당 주소에서 
+* admin
+  * email - admin1@admin.com
+  * password - admin1
+
+
 
 ## 전화 인증
 
@@ -66,6 +84,8 @@ https://ably-project-ifvfniimwq-du.a.run.app/api/v1/swagger-ui/index.html
 ## 회원 가입
 
 필요한 정보를 받아 회원 가입을 진행합니다. 헤더에 SID가 없으면 전화 인증이 안된걸로 간주하고 회원가입이 진행되지 않습니다. Redis에 요청한 SID가 없을 경우 마찬가지로 가입이 진행되지 않습니다. 
+
+이메일이나 휴대폰 번호 중복시 가입이 불가능합니다.
 
 * **POST** /api/v1/user - 회원가입
 
@@ -85,7 +105,12 @@ https://ably-project-ifvfniimwq-du.a.run.app/api/v1/swagger-ui/index.html
 ## 회원 정보 수정
 
 
-* PUT /api/v1/user 
+* **PUT** /api/v1/user/{userId} - 회원 정보를 받아 회원을 수정합니다.
+* **PATCH** /api/v1/user/{userId}/passwd - 유저 비밀번호를 수정합니다. 휴대폰 인증에서 받은 SID가 헤더에 들어있어야 합니다.
+
+## 회원 탈퇴
+
+* **Delete** /api/v1/user/{userId} - 해당 userId로 탈퇴를 진행합니다.
 
 
 
