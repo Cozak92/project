@@ -10,7 +10,7 @@ Spring boot 2.6.4
 
 Mysql 8.0
 
-Redis
+Redis 6.2.5
 
 
 Cloud SQL
