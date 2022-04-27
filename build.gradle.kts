@@ -52,6 +52,12 @@ dependencies {
 	kapt("org.mapstruct:mapstruct-processor:1.4.2.Final")
 	implementation("com.googlecode.libphonenumber:libphonenumber:5.5")
 
+	//GCP
+	implementation("com.google.cloud:spring-cloud-gcp-dependencies:3.2.1")
+	implementation ("org.springframework.cloud:spring-cloud-gcp-starter-sql-mysql:1.2.8.RELEASE")
+	implementation ("com.google.cloud.sql:mysql-socket-factory-connector-j-8:1.5.0")
+
+
 	// Test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.mockk:mockk:1.12.3")
