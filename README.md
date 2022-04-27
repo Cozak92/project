@@ -6,7 +6,7 @@
 
 Kotlin 1.6
 
-Spring boot 2.6.4
+Spring boot 2.6.7
 
 Mysql 8.0
 
