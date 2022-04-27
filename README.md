@@ -35,7 +35,7 @@ Cloud Run
 
 ---
 
-## [파일 구조](https://github.com/Cozak92/project/blob/main/tree.text)
+## [파일 구조](https://github.com/Cozak92/project/blob/main/src/main/resources/tree.text)
 
 
 
