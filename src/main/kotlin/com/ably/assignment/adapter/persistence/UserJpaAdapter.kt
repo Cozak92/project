@@ -66,5 +66,6 @@ class UserJpaAdapter(private val userJpaRepository: UserJpaRepository) : ReadOut
             isDeleted = true
             deletedAt = LocalDateTime.now()
         }
+        assert(deletedUser.isDeleted)
     }
 }
